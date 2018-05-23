@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Teachers
 {
+
+    /**
+     * @ORM\OneToOne(targetEntity="Classes", mappedBy="teacher")
+     */
+    private $classes;
     /**
      * @var int
      *

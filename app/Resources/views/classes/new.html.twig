@@ -4,7 +4,7 @@
     <div id="wrapper">
         <div id="container">
             <div id="welcome">
-                <h1>Tailor Management System</h1>
+                <h1>{{ heading }}</h1>
             </div>
 
             <div id="status">
@@ -42,6 +42,8 @@
             @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
             @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
             .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
+            #status #form label{width: 200px;height: 50px; display: inline-block;}
+            #status #form input, #status #form textarea{width: 200px; display: inline-block;}
         }
     </style>
 {% endblock %}

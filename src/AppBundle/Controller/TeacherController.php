@@ -40,7 +40,7 @@ class TeacherController extends Controller
             ->add('fatherName', TextType::class)
             ->add('phoneNumber', TelType::class, ['required' => false])
             ->add('address', TextareaType::class)
-            ->add('save', SubmitType::class, array('label' => 'Add Customer'))
+            ->add('save', SubmitType::class, array('label' => 'Add Teacher'))
             ->getForm();
 
 
@@ -58,8 +58,60 @@ class TeacherController extends Controller
             return $this->redirectToRoute('teacher_listing');
         }
 
-        return $this->render('teacher/new.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->render('teacher/new.html.twig', [
+            'form' => $form->createView(), 'heading' => 'Add New Teacher Record'
+        ]);
+    }
+
+    /**
+     * @Route("teacher/edit/{id}", name="teacher_update")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+            $teacher = $entityManager->getRepository(Teachers::class)
+            ->find($id);
+
+
+        $form = $this->createFormBuilder($teacher)
+            ->add('name', TextType::class)
+            ->add('fatherName', TextType::class)
+            ->add('phoneNumber', TelType::class, ['required' => false])
+            ->add('address', TextareaType::class)
+            ->add('save', SubmitType::class, array('label' => 'Update Teacher'))
+            ->getForm();
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $teacher = $form->getData();
+
+            $teacher->setUpdatedAt(new \DateTime('now'));
+            $entityManager->flush();
+
+            return $this->redirectToRoute('teacher_listing');
+        }
+
+        return $this->render('teacher/new.html.twig', [
+            'form' => $form->createView(), 'heading' => 'Update Teacher Record'
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("teacher/delete/{id}", name="edit_teacher_delete")
+     */
+    public function removeAction($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $teacher = $entityManager->getRepository(Teachers::class)
+            ->find($id);
+        if ($teacher) {
+            $entityManager->remove($teacher);
+            $entityManager->flush();
+            return $this->redirectToRoute('teacher_listing');
+        }
     }
 }
