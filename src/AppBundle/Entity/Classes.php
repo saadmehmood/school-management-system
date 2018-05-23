@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Classes
 {
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Teachers", inversedBy="classes")
+     * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id")
+     */
+    private $teacher;
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -55,6 +60,29 @@ class Classes
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * Set teacher
+     *
+     * @param $teacher
+     * @return $this
+     */
+    public function setTeacher($teacher)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return string
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
 
 
     /**
