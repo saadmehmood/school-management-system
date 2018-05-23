@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e21c1a1-c6eb-4185-a46d-15c81031e40d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/classes/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/classes/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/classes/new.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/classes/new.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/teacher/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/teacher/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/teacher/new.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/teacher/new.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/TeacherController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/TeacherController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Classes.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Classes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Teachers.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Teachers.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/ClassesRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/ClassesRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -102,7 +94,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassesController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ClassesController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ClassesController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="472">
@@ -110,6 +102,16 @@
               <folding>
                 <element signature="e#40#69#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -149,6 +151,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Classes.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/classes/index.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/ClassesController.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -590,12 +593,12 @@
       <workItem from="1526459574177" duration="1298000" />
       <workItem from="1526884192507" duration="2665000" />
       <workItem from="1526969446717" duration="7063000" />
-      <workItem from="1527049977711" duration="15515000" />
+      <workItem from="1527049977711" duration="15637000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26541000" />
+    <option name="totallyTimeSpent" value="26663000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="49" y="24" width="1317" height="744" extended-state="6" />
@@ -937,6 +940,14 @@
           <folding>
             <element signature="e#40#69#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
