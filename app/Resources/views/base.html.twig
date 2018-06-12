@@ -7,6 +7,14 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+    <div>
+        <span>
+            <a href="/teacher">{{ 'Teacher Lisiting'|trans }}</a>
+        </span>
+        <span class="action">
+            <a href="/class">{{ 'Class Listing'|trans }}</a>
+        </span>
+    </div>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

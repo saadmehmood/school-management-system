@@ -2,58 +2,49 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Teachers;
+use AppBundle\Entity\Teacher;
+use AppBundle\Form\TeacherType;
+use AppBundle\Service\TeacherService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 class TeacherController extends Controller
 {
     /**
+     * @param TeacherService $teacherService
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @Route("teacher", name="teacher_listing")
      */
-    public function indexAction(Request $request)
+    public function indexAction(TeacherService $teacherService)
     {
-        $teacher = $this->getDoctrine()
-            ->getRepository(Teachers::class)
-            ->findAll();
-        // replace this example code with whatever you need
+        $teachers = $teacherService->getTeachers();
+
         return $this->render('teacher/index.html.twig', [
-            'teachers' => $teacher,
+            'teachers' => $teachers,
         ]);
     }
 
     /**
+     * @param Request $request
+     * @param TeacherService $teacherService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Route("teacher/create", name="teacher_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, TeacherService $teacherService)
     {
-        $teacher = new Teachers();
+        $teacher = new Teacher();
 
 
-        $form = $this->createFormBuilder($teacher)
-            ->add('name', TextType::class)
-            ->add('fatherName', TextType::class)
-            ->add('phoneNumber', TelType::class, ['required' => false])
-            ->add('address', TextareaType::class)
-            ->add('save', SubmitType::class, array('label' => 'Add Teacher'))
-            ->getForm();
+        $form = $this->createForm(TeacherType::class, $teacher);
 
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $teacher = $form->getData();
-
-            $teacher->setCreatedAt(new \DateTime('now'));
-            $teacher->setUpdatedAt(new \DateTime('now'));
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($teacher);
-            $entityManager->flush();
+            $teacherService->createTeacher($form);
 
             return $this->redirectToRoute('teacher_listing');
         }
@@ -64,31 +55,25 @@ class TeacherController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param TeacherService $teacherService
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Route("teacher/edit/{id}", name="teacher_update")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, TeacherService $teacherService, $id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-            $teacher = $entityManager->getRepository(Teachers::class)
-            ->find($id);
+        $teacher = $teacherService->getTeacher($id);
 
 
-        $form = $this->createFormBuilder($teacher)
-            ->add('name', TextType::class)
-            ->add('fatherName', TextType::class)
-            ->add('phoneNumber', TelType::class, ['required' => false])
-            ->add('address', TextareaType::class)
-            ->add('save', SubmitType::class, array('label' => 'Update Teacher'))
-            ->getForm();
+        $form = $this->createForm(TeacherType::class, $teacher);
 
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $teacher = $form->getData();
-
-            $teacher->setUpdatedAt(new \DateTime('now'));
-            $entityManager->flush();
+            $teacherService->updateTeacher($form);
 
             return $this->redirectToRoute('teacher_listing');
         }
@@ -99,19 +84,15 @@ class TeacherController extends Controller
     }
 
     /**
+     * @param TeacherService $teacherService
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Route("teacher/delete/{id}", name="edit_teacher_delete")
      */
-    public function removeAction($id)
+    public function removeAction(TeacherService $teacherService, $id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $teacher = $entityManager->getRepository(Teachers::class)
-            ->find($id);
-        if ($teacher) {
-            $entityManager->remove($teacher);
-            $entityManager->flush();
-            return $this->redirectToRoute('teacher_listing');
-        }
+        $teacherService->removeTeacher($id);
+        return $this->redirectToRoute('teacher_listing');
     }
 }

@@ -5,12 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Student
+ * Class Student
+ * @package AppBundle\Entity
  *
  * @ORM\Table(name="students")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\StudentsRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\StudentRepository")
  */
-class Students
+class Student
 {
     /**
      * @var int
