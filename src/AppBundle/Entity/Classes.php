@@ -5,7 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class
+ * Classes
+ * @package AppBundle\Entity
  *
  * @ORM\Table(name="classes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ClassesRepository")
@@ -13,10 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Classes
 {
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Teachers", inversedBy="classes")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Teacher", inversedBy="classes")
      * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id")
      */
     private $teacher;
+
     /**
      * @var int
      *
@@ -100,7 +102,7 @@ class Classes
      *
      * @param string $name
      *
-     * @return Class
+     * @return Classes
      */
     public function setName($name)
     {
@@ -124,7 +126,7 @@ class Classes
      *
      * @param string $section
      *
-     * @return Class
+     * @return Classes
      */
     public function setSection($section)
     {
@@ -148,7 +150,7 @@ class Classes
      *
      * @param integer $teacherId
      *
-     * @return Class
+     * @return Classes
      */
     public function setTeacherId($teacherId)
     {
@@ -172,7 +174,7 @@ class Classes
      *
      * @param \DateTime $createdAt
      *
-     * @return Class
+     * @return Classes
      */
     public function setCreatedAt($createdAt)
     {
@@ -196,7 +198,7 @@ class Classes
      *
      * @param \DateTime $updatedAt
      *
-     * @return Class
+     * @return Classes
      */
     public function setUpdatedAt($updatedAt)
     {

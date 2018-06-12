@@ -4,15 +4,15 @@
     <div id="wrapper">
         <div id="container">
             <div id="welcome">
-                <h1><span>School Classes</span></h1>
+                <h1><span>{{ 'School Classes' }}</span></h1>
             </div>
 
             <div id="status">
                 <div class="head">
-                    <span class="nameHead">Name</span>
-                    <span class="nameHead">Section</span>
-                    <span class="phoneHead">Class Teacher</span>
-                    <span class="actionHead">Action</span>
+                    <span class="nameHead">{{ 'Name'|trans }}</span>
+                    <span class="nameHead">{{ 'Section' }}</span>
+                    <span class="phoneHead">{{ 'Class Teacher' }}</span>
+                    <span class="actionHead">{{ 'Action' }}</span>
                 </div>
                 {% for class in classes %}
                     <div>
@@ -20,12 +20,12 @@
                         <span class="name">{{ class.section }}</span>
                         <span class="name">{{ class.teacher.name }}</span>
                         <span class="action">
-                            <a href="/class/edit/{{ class.id }}">Edit</a>
-                            <a href="/class/delete/{{ class.id }}">Delete</a></span>
+                            <a href="/class/edit/{{ class.id }}">{% trans %}Edit {% endtrans %}</a>
+                            <a href="/class/delete/{{ class.id }}">{% trans %}Delete {% endtrans %}</a></span>
                     </div>
                 {% endfor %}
             </div>
-            <a href="class/create">Add new</a>
+            <a href="class/create">{{ 'Add new'|trans }}</a>
 
         </div>
     </div>

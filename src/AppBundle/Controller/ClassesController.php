@@ -3,68 +3,58 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Classes;
-use AppBundle\Entity\Teachers;
-use AppBundle\Repository\ClassesRepository;
+use AppBundle\Entity\Teacher;
+use AppBundle\Form\ClassesType;
+use AppBundle\Service\ClassService;
+use AppBundle\Service\TeacherService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class ClassesController
+ * @package AppBundle\Controller
+ */
 class ClassesController extends Controller
 {
     /**
-     * @Route("classes", name="classes_listing")
+     * @param ClassService $classService
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("class", name="classes_listing")
      */
-    public function indexAction()
+    public function indexAction(ClassService $classService)
     {
-        $classes = $this->getDoctrine()
-            ->getRepository(Classes::class)
-            ->getClassesWithTeacher();
+        $classes = $classService->getClassTeacher();
         return $this->render('classes/index.html.twig', [
             'classes' => $classes,
         ]);
     }
 
     /**
+     * @param Request $request
+     * @param TeacherService $teacherService
+     * @param ClassService $classService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Route("class/create", name="classes_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, TeacherService $teacherService, ClassService $classService)
     {
         $classes = new Classes();
 
-        $teachers = $this->getDoctrine()
-            ->getRepository(Teachers::class)
-            ->findAll();
-        foreach ($teachers as $teacher) {
-            $arr[$teacher->getName()] = $teacher->getId();
-        }
-
-        $form = $this->createFormBuilder($classes)
-            ->add('name', TextType::class)
-            ->add('section', TextType::class)
-            ->add('teacherId', ChoiceType::class, array(
-                'choices' => $arr,
-                'label' => 'Teacher'
-            ))
-            ->add('save', SubmitType::class, array('label' => 'Add Class'))
-            ->getForm();
+        $arr = $teacherService->teacherName();
+        $form = $this->createForm(ClassesType::class, $classes, ['mapped'=>$arr]);
 
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $classes = $form->getData();
-
-            $classes->setCreatedAt(new \DateTime('now'));
-            $classes->setUpdatedAt(new \DateTime('now'));
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($classes);
-            $entityManager->flush();
+            $classService->createClass($form);
 
             return $this->redirectToRoute('classes_listing');
         }
@@ -75,30 +65,29 @@ class ClassesController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param ClassService $classService
+     * @param TeacherService $teacherService
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Route("class/edit/{id}", name="classes_update")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, ClassService $classService, TeacherService $teacherService, $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $class = $entityManager->getRepository(Classes::class)
-            ->find($id);
+        $class = $classService->getClass($id);
 
 
-        $form = $this->createFormBuilder($class)
-            ->add('name', TextType::class)
-            ->add('section', TextType::class)
-            ->add('address', TextareaType::class)
-            ->add('save', SubmitType::class, array('label' => 'Update Class Record'))
-            ->getForm();
+        $arr = $teacherService->teacherName();
+        $form = $this->createForm(ClassesType::class, $class, ['mapped'=>$arr]);
 
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $class = $form->getData();
 
-            $class->setUpdatedAt(new \DateTime('now'));
-            $entityManager->flush();
+            $classService->updateClass($form);
 
             return $this->redirectToRoute('classes_listing');
         }
@@ -109,19 +98,15 @@ class ClassesController extends Controller
     }
 
     /**
+     * @param ClassService $classService
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Route("class/delete/{id}", name="classes_delete")
      */
-    public function removeAction($id)
+    public function removeAction(ClassService $classService, $id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $classes = $entityManager->getRepository(Classes::class)
-            ->find($id);
-        if ($classes) {
-            $entityManager->remove($classes);
-            $entityManager->flush();
-        }
+        $classService->removeClass($id);
         return $this->redirectToRoute('classes_listing');
     }
 }

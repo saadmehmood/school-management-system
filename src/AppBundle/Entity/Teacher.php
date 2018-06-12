@@ -5,18 +5,20 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Teacher
+ * Class Teacher
+ * @package AppBundle\Entity
  *
  * @ORM\Table(name="teachers")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TeachersRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TeacherRepository")
  */
-class Teachers
+class Teacher
 {
 
     /**
-     * @ORM\OneToOne(targetEntity="Classes", mappedBy="teacher")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Classes", mappedBy="teacher")
      */
     private $classes;
+
     /**
      * @var int
      *
@@ -108,7 +110,7 @@ class Teachers
      *
      * @param string $fatherName
      *
-     * @return Student
+     * @return Teacher
      */
     public function setFatherName($fatherName)
     {
